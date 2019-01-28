@@ -1,0 +1,6 @@
+# swp files
+*.swp
+*.swo
+
+# executables
+*.out
