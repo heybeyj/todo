@@ -6,6 +6,8 @@
 #define TODO "/.todo"
 #define READ_BLOCK 1024
 
+void help(const char *prog_name);
+
 int main(int argc, char **argv)
 {
     const char *homedir = getenv("HOME");
@@ -32,8 +34,11 @@ int main(int argc, char **argv)
     }
 
     int opt, print;
-    while ((opt = getopt(argc, argv, "l")) != -1) {
+    while ((opt = getopt(argc, argv, "hl")) != -1) {
         switch (opt) {
+            case 'h':
+                help(argv[0]);
+                exit(EXIT_SUCCESS);
             case 'l':
                 print = 1;
                 break;
@@ -57,4 +62,20 @@ int main(int argc, char **argv)
     }
     fclose(todo);
     exit(EXIT_SUCCESS);
+}
+
+void help(const char *prog_name)
+{
+    const char *message =
+        "A todo list command line application\n"
+        "\n"
+        "Usage: %s [OPTIONS]\n"
+        "With no options, it will read from stdin until a blank line is "
+        "provided and append\nthe input to the todo list (~/.todo). Each line "
+        "is a single item on the list.\n"
+        "\n"
+        "OPTIONS:\n"
+        "  -h\n      show this message and exit\n"
+        "  -l\n      print the current todo list\n";
+    printf(message, prog_name);
 }
