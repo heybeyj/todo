@@ -31,14 +31,18 @@ int main(int argc, char **argv)
         }
     }
 
-    int opt, print;
-    while ((opt = getopt(argc, argv, "l")) != -1) {
+    int opt, print, del;
+    del = print = 0;
+    while ((opt = getopt(argc, argv, "ld")) != -1) {
         switch (opt) {
             case 'l':
                 print = 1;
                 break;
+            case 'd':
+                del = 1;
+                break;
             default:
-                fprintf(stderr, "Usage: %s [-l]\n", argv[0]);
+                fprintf(stderr, "Usage: %s [-l -d]\n", argv[0]);
                 fclose(todo);
                 exit(EXIT_FAILURE);
         }
@@ -54,6 +58,11 @@ int main(int argc, char **argv)
             }
             printf("%s", contents);
         }
+    }
+    if (del) {
+        fclose(todo);
+        todo = fopen(filename, "w");
+        printf("[+] Cleared todo list\n");
     }
     fclose(todo);
     exit(EXIT_SUCCESS);
