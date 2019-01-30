@@ -4,3 +4,4 @@
 
 # executables
 *.out
+*.dbg
